@@ -69,13 +69,18 @@ function prepareData(jsonData) {
       }
       if (spaces.length === 1) {
         student.middleName = null;
-        student.lastName = undefined;
+        student.lastName = "";
         student.nickName = undefined;
       }
       //Defining gender
       student.gender = gender;
       //Defining house
       student.house = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase();
+      //Charging image
+      let imagePath = student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase().substring(0, 1) + ".png";
+      student.image = "./images/" + `${imagePath}`;
+      //Creating Array of objects
+      arrStudents.push(student);
     }
 
     //console.log(fullname);
@@ -86,5 +91,7 @@ function prepareData(jsonData) {
     // console.log(student.nickName);
     // console.log(student.gender);
     // console.log(student.house);
+    // console.log(arrStudents);
+    console.log(student.image);
   });
 }
