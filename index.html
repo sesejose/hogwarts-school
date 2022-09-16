@@ -13,59 +13,94 @@
       <div id="logo" class="center">
         <div class="logo"><h1>HOGWARTS</h1></div>
       </div>
+
       <!-- Nav -->
       <nav>
         <div id="grid-controler" class="container">
+          <!--  Title  -->
+
           <div class="title">
             <h1>Student List</h1>
-            <!-- <div class="amount-container">
+            <div class="amount-container">
               <span>100</span>
               <span>Students</span>
-            </div> -->
+            </div>
           </div>
+
+          <!-- Mobile Filters -->
+
           <div class="buttons-sort-filter">
-            <div class="sort">
+            <!--Sort Options Mobile-->
+            <div class="buttons-gray">
+              <button class="icons"><img src="assets/icons/bi_filter.svg" /></button>
+              <select id="sorts-mobile" required="" class="sort-options">
+                <!-- <optgroup label="Option Group" class="group"> -->
+                <option>All</option>
+                <option>Sort by first name</option>
+                <option>Sort by last name</option>
+                <option>Sort by enrolled</option>
+                <option>Sort by non-enrolled</option>
+                <!-- </optgroup> -->
+              </select>
+            </div>
+            <!---->
+            <!--Filter Options Mobile-->
+            <div class="buttons-gray">
+              <button class="icons"><img src="assets/icons/bi_sliders.svg" /></button>
+              <select id="filter-mobile" required="" class="filter-options">
+                <!-- <optgroup label="Option Group" class="group"> -->
+                <option>Filter All</option>
+                <option>Filter by resposibility</option>
+                <option>Filter by expelled</option>
+                <option>Filter by non-expelled</option>
+                <option>Filter by house</option>
+                <!-- </optgroup> -->
+              </select>
+            </div>
+            <!---->
+            <!-- <div class="sort">
               <button class="icons"><img src="assets/icons/bi_filter.svg" /></button>
             </div>
             <div class="filter">
               <button class="icons"><img src="assets/icons/bi_sliders.svg" /></button>
             </div>
+          </div> -->
           </div>
+
+          <!-- Desktop Filters -->
 
           <div class="buttons-sort-filter-desktop">
-            <div class="sort">
-              <button class="buttons-gray"><img src="assets/icons/bi_filter.svg" /><span>Sort</span></button>
+            <!--Sort Options Desktop-->
+            <div class="buttons-gray">
+              <button class="icons"><img src="assets/icons/bi_filter.svg" /></button>
+              <select id="sorts-desk" required="" class="sort-options">
+                <!-- <optgroup label="Option Group" class="group"> -->
+                <option>Sort by first name</option>
+                <option>Sort by last name</option>
+                <option>Sort by enrolled</option>
+                <option>Sort by non-enrolled</option>
+                <option>All</option>
+                <!-- </optgroup> -->
+              </select>
             </div>
-
-            <!--Options-->
-            <!-- <div class="filter">
-              <p>
-
-                <label for="select">
-                  <div><h4>Default sorting</h4></div>
-                </label>
-
-                <select id="filter" required="" class="filter-options">
-                  <optgroup label="Option Group" class="group">
-
-                  <option>Filter All</option>
-                  <option>Filter by resposibility</option>
-                  <option>Filter by expelled</option>
-                  <option>Filter by non-expelled</option>
-                  <option>Filter by house</option>
-
-                  </optgroup>
-
-                </select>
-              </p>
-              <h4>Default sorting</h4>
-            </div> -->
             <!---->
-
-            <div class="filter">
-              <button class="buttons-gray"><img src="assets/icons/bi_sliders.svg" /><span>Filter</span></button>
+            <!--Filter Options Desktop-->
+            <div class="buttons-gray">
+              <button class="icons"><img src="assets/icons/bi_sliders.svg" /></button>
+              <select id="filter-desk" required="" class="filter-options">
+                <!-- <optgroup label="Option Group" class="group"> -->
+                <option>Filter All</option>
+                <option>Filter by resposibility</option>
+                <option>Filter by expelled</option>
+                <option>Filter by non-expelled</option>
+                <option>Filter by house</option>
+                <!-- </optgroup> -->
+              </select>
             </div>
+            <!---->
           </div>
+
+          <!--  Search  -->
 
           <div id="search">
             <div class="search-container">
@@ -78,6 +113,7 @@
             </div>
           </div>
         </div>
+
         <!-- Grid ends -->
       </nav>
     </header>
@@ -85,7 +121,7 @@
     <main>
       <!-- Sort Modal -->
 
-      <div id="sort-modal" class="hiden">
+      <!-- <div id="sort-modal" class="hiden">
         <div class="modal-sort">
           <ul class="sorts">
             <li class="sort-house"><a href="#">Sort by first name</a></li>
@@ -95,11 +131,11 @@
             <li class="sort-list"><a href="#">All</a></li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <!-- Filter Modal -->
 
-      <div id="filter-modal" class="hiden">
+      <!-- <div id="filter-modal" class="hiden">
         <div class="modal-filter">
           <ul class="filters">
             <li class="filter-house"><a href="#">Filter house</a></li>
@@ -108,20 +144,20 @@
             <li class="filter-non-expelled"><a href="#">Filter non-expelled</a></li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
-      <section id="parent">
-        <div class="container">
+      <section>
+        <!-- <div class="container">
           <div class="amount-container">
             <h3>100</h3>
             <h3>Students</h3>
           </div>
-        </div>
+        </div> -->
 
-        <!--Mobile Tablet Template-->
+        <!--Mobile / Tablet Template comes here  -->
 
-        <div class="container-template">
-          <div class="pic-container">
+        <div id="parent-mobile">
+          <!-- <div class="pic-container">
             <div class="photo"><img src="images/images/abbott_h.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
@@ -138,18 +174,16 @@
               </div>
             </div>
           </div>
-          <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button>
+          <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button> -->
         </div>
 
-        <!--Desktop Template-->
+        <!--Desktop Template comes here-->
 
-        <div class="container">
-          <table id="table-template">
+        <div id="parent-desktop" class="container">
+          <!-- <table id="table-template">
             <thead>
               <tr>
-                <!--Row-->
                 <th>Picture</th>
-                <!--Cell bold-->
                 <th>Fullname</th>
                 <th>Nick name</th>
                 <th>House</th>
@@ -159,7 +193,6 @@
               </tr>
               <tr>
                 <td class="photo"><img src="images/images/abbott_h.png" alt="" /></td>
-                <!--Cell normal-->
                 <td class="fullname">
                   <div class="firstname">Hermione</div>
                   <div class="firstname">Jean</div>
@@ -177,19 +210,70 @@
                 </td>
               </tr>
             </thead>
-          </table>
+          </table> -->
         </div>
       </section>
 
-      <!------------   Template   ------------->
+      <!------------  Desktop Template   ------------->
 
-      <template id="template">
-        <tr>
-          <td data-field="name">NAME</td>
-          <td data-field="type">TYPE</td>
-          <td data-field="desc">DESCRIPTION</td>
-          <td data-field="age">AGE</td>
-        </tr>
+      <template id="table-template" class="container">
+        <table>
+          <thead>
+            <tr>
+              <!--Row-->
+              <th>Picture</th>
+              <!--Cell bold-->
+              <th>Fullname</th>
+              <th>Nick name</th>
+              <th>House</th>
+              <th>Resposibility</th>
+              <th>Squad</th>
+              <th>Enrollement</th>
+            </tr>
+            <tr>
+              <td class="photo"><img src="images/images/abbott_h.png" alt="" /></td>
+              <!--Cell normal-->
+              <td class="fullname">
+                <div class="firstname">Hermione</div>
+                <div class="firstname">Jean</div>
+                <div class="firstname">Granger</div>
+              </td>
+              <td class="nickname">Nick name</td>
+              <td class="house">
+                <div class="color-house"></div>
+                Hufflepuff
+              </td>
+              <td class="prefect"><img src="assets/icons/bi_shield-fill.svg" alt="" />Prefect</td>
+              <td class="squad"><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" />Member</td>
+              <td class="enrollement">
+                <button class="buttons-white"><img src="assets/icons/bi_person-dash.svg" alt="" />Expell student</button>
+              </td>
+            </tr>
+          </thead>
+        </table>
+      </template>
+
+      <!------------  Mobile Template   ------------->
+
+      <template id="mobile-template" class="container-template">
+        <div class="pic-container">
+          <div class="photo"><img src="images/images/abbott_h.png" alt="" /></div>
+          <div class="icons-container">
+            <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
+            <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
+          </div>
+        </div>
+        <div class="name-container">
+          <div class="name">Hermione Jean Granger</div>
+          <div class="nick-house-container">
+            <div class="nickname">NickName</div>
+            <div class="house">
+              <div class="color-house"></div>
+              <span>Hufflepuff</span>
+            </div>
+          </div>
+        </div>
+        <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button>
       </template>
     </main>
 
