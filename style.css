@@ -463,7 +463,6 @@ footer {
 
 #table-template {
   /* Mobile */
-  /*Mobile*/
   display: none;
 }
 
@@ -532,6 +531,7 @@ footer {
 
 @media only screen and (min-width: 1200px) {
   #table-template {
+    /*Desktop*/
     display: flex;
     width: 100%;
   }
