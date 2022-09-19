@@ -29,7 +29,7 @@
 
   --mr: 0 1rem 0 0;
 
-  --mtb-large: 3rem 0;
+  --mtb-large: 3rem auto;
 
   --m-auto: 0 auto;
 
@@ -283,11 +283,48 @@ header {
   background-color: var(--gray);
 }
 
+.buttons-modal {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.85rem;
+  border: none;
+
+  border-radius: var(--border-radius-4);
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+
+  box-shadow: var(--shadow);
+  background-color: var(--white);
+}
+
+.buttons-red {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+
+  border-radius: var(--border-radius-10);
+  padding: 10px 20px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  border: none;
+  box-shadow: var(--shadow);
+  background-color: var(--red);
+  color: var(--white);
+}
+
 /* Filters and Sort */
 
 #filter-modal,
-#sort-modal {
-  position: absolute;
+#sort-modal,
+#student-modal {
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -300,14 +337,23 @@ header {
 }
 
 .modal-filter,
-.modal-sort {
+.modal-sort,
+.modal-student {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--white);
   width: 100%;
   border-radius: var(--border-radius-10);
-  margin: var(--m);
+
+  margin: var(--mtb-large);
+  width: 90%;
 }
 
 .modal-filter ul,
@@ -335,6 +381,49 @@ header {
 .modal-sort ul li a {
   text-decoration: none;
   color: var(--black);
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  padding: var(--p);
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.fullname {
+  font-size: medium;
+  font-weight: 600;
+}
+.gender,
+.house-mobile,
+.blood,
+.responsibility,
+.squad {
+  font-weight: 600;
+}
+.photo-container {
+  margin: var(--m-auto);
+}
+.photo-container .photo img {
+  width: 110px;
+  height: 110px;
+}
+.fullname,
+.gender-container,
+.house-container,
+.blood-container,
+.responsibility-container,
+.squad-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: end;
 }
 
 /*Main*/
@@ -375,7 +464,7 @@ section {
   background-color: var(--white);
   border-radius: var(--border-radius-10);
   box-shadow: var(--shadow);
-  /* margin: var(--m); */
+  margin: var(--mtb);
 }
 
 .pic-container {
@@ -408,10 +497,20 @@ section {
   max-height: 16px;
 }
 
-.name-container {
+.name-nick-house-color-wrap {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: baseline;
+}
+
+.name-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.2rem;
   width: 100%;
+  justify-content: center;
 }
 
 .name {
@@ -422,9 +521,10 @@ section {
 .nick-house-container {
   display: flex;
   flex-direction: row;
-  justify-content: baseline;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  padding: var(--ps);
 }
 
 .nickname {
@@ -433,6 +533,7 @@ section {
 }
 
 .house {
+  /*Mobile*/
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -441,14 +542,25 @@ section {
   font-size: smaller;
 }
 
+.house-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: baseline;
+}
+
 .color-house {
   width: 1rem;
   height: 1rem;
   border-radius: var(--border-radius-100);
-  background-color: var(--red);
+  /* background-color: var(--red); */
 }
 
-thead,
+.housename {
+  font-size: smaller;
+}
+
 th {
   display: flex;
   flex-wrap: wrap;
@@ -461,9 +573,11 @@ footer {
   grid-row: 3/4;
 }
 
-#table-template {
+thead,
+.student-object {
   /* Mobile */
   display: none;
+  flex-wrap: wrap;
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -524,6 +638,7 @@ footer {
 
   .house {
     gap: 1rem;
+    justify-content: start;
   }
 }
 
@@ -532,8 +647,8 @@ footer {
 @media only screen and (min-width: 1200px) {
   #table-template {
     /*Desktop*/
-    display: flex;
-    width: 100%;
+    /* display: flex; */
+    /* width: 100%; */
   }
 
   #grid-controler {
@@ -582,10 +697,17 @@ footer {
   .container {
     max-width: 1280px;
   }
-  table {
+  /* table {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     width: 100%;
+  } */
+
+  .student-object {
+    /* Mobile */
+    display: flex;
+    flex-wrap: wrap;
   }
 
   tr,
@@ -593,26 +715,26 @@ footer {
   td {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
     text-align: center;
-    gap: 0.5rem;
+    gap: 1rem;
     font-size: 1rem;
-    padding: var(--p);
+    /* padding: var(--p); */
     width: 100%;
   }
 
   tr {
-    width: 100%;
-    border-radius: var(--border-radius-10);
-    border: 1px solid #ddd;
-    padding: 8px;
+    min-width: 1280px;
+    /* border-radius: var(--border-radius-10); */
+    border-bottom: 1px solid #ddd;
+    /* box-shadow: var(--shadow); */
+    /* padding: 8px; */
+    margin: var(--mb);
   }
   th,
   td {
-    /* width: auto; */
-    border: 1px solid #ddd;
-    padding: 8px;
+    padding: 1rem 0;
   }
 
   .photo img {
@@ -680,6 +802,62 @@ footer {
   .buttons-gray .icons {
     box-shadow: none;
     background-color: var(--gray);
+  }
+
+  /* .student-info {
+    width: 50%; */
+  }
+
+  .modal-filter,
+  .modal-sort,
+  .modal-student {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+    width: 100%;
+    border-radius: var(--border-radius-10);
+
+    margin: var(--mtb-large);
+    width: 30%;
+  }
+
+  .photo-container .photo img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .fullname {
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 70%;
+    margin: var(--m-auto);
+  }
+  .gender,
+  .house-mobile,
+  .blood,
+  .responsibility,
+  .squad {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .gender-status,
+  .house-name,
+  .blood-status,
+  .yes {
+    font-size: 1rem;
+  }
+
+  .expel-student-container {
+    
+    margin: var(--mtb-large);
   }
 
   /* #filter select option[value="Filter All"] {

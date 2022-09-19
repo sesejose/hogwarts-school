@@ -52,7 +52,7 @@
                 <option>Filter All</option>
                 <option>Filter by resposibility</option>
                 <option>Filter by expelled</option>
-                <option>Filter by non-expelled</option>
+                <option>Filter by enrolled</option>
                 <option>Filter by house</option>
                 <!-- </optgroup> -->
               </select>
@@ -78,7 +78,7 @@
                 <option>Sort by first name</option>
                 <option>Sort by last name</option>
                 <option>Sort by enrolled</option>
-                <option>Sort by non-enrolled</option>
+                <option>Sort by expelled</option>
                 <option>All</option>
                 <!-- </optgroup> -->
               </select>
@@ -92,7 +92,7 @@
                 <option>Filter All</option>
                 <option>Filter by resposibility</option>
                 <option>Filter by expelled</option>
-                <option>Filter by non-expelled</option>
+                <option>Filter by enrolled</option>
                 <option>Filter by house</option>
                 <!-- </optgroup> -->
               </select>
@@ -104,10 +104,10 @@
 
           <div id="search">
             <div class="search-container">
-              <form class="form-search" action="/action_page.php">
-                <input type="text" placeholder="Search.." name="search" />
+              <form class="form-search" action="">
+                <input id="search-field" class="input" type="text" placeholder="Search.." name="search" />
                 <button class="icons" type="submit">
-                  <img src="assets/icons/bi_search.svg" width="16px" />
+                  <img src="assets/icons/bi_search.svg" width="16px" alt="" />
                 </button>
               </form>
             </div>
@@ -146,7 +146,7 @@
         </div>
       </div> -->
 
-      <section>
+      <div>
         <!-- <div class="container">
           <div class="amount-container">
             <h3>100</h3>
@@ -158,7 +158,7 @@
 
         <div id="parent-mobile">
           <!-- <div class="pic-container">
-            <div class="photo"><img src="images/images/abbott_h.png" alt="" /></div>
+            <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
               <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
@@ -179,101 +179,144 @@
 
         <!--Desktop Template comes here-->
 
-        <div id="parent-desktop" class="container">
+        <section id="parent-desktop" class="container">
           <!-- <table id="table-template">
+            <thead> -->
+          <table>
             <thead>
               <tr>
                 <th>Picture</th>
-                <th>Fullname</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
                 <th>Nick name</th>
+                <th>Color</th>
                 <th>House</th>
                 <th>Resposibility</th>
                 <th>Squad</th>
                 <th>Enrollement</th>
-              </tr>
-              <tr>
-                <td class="photo"><img src="images/images/abbott_h.png" alt="" /></td>
-                <td class="fullname">
-                  <div class="firstname">Hermione</div>
-                  <div class="firstname">Jean</div>
-                  <div class="firstname">Granger</div>
-                </td>
-                <td class="nickname">Nick name</td>
-                <td class="house">
-                  <div class="color-house"></div>
-                  Hufflepuff
-                </td>
-                <td class="prefect"><img src="assets/icons/bi_shield-fill.svg" alt="" />Prefect</td>
-                <td class="squad"><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" />Member</td>
-                <td class="enrollement">
-                  <button class="buttons-white"><img src="assets/icons/bi_person-dash.svg" alt="" />Expell student</button>
-                </td>
+                <th>More info</th>
               </tr>
             </thead>
-          </table> -->
+            <tbody class="student-object">
+              <!--  Here comes the template  -->
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Sort Modal -->
+
+        <div id="student-modal" class="">
+          <div class="modal-student">
+            <div class="student-info">
+              <div class="photo-container">
+                <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
+              </div>
+              <div class="fullname">
+                <div class="firstname">Hermione</div>
+                <div class="middlename">Jean</div>
+                <div class="lastname">Granger</div>
+                <div class="nickname">Nick Name</div>
+              </div>
+              <hr />
+              <div class="gender-container">
+                <div class="gender">Gender:</div>
+                <div class="gender-status">Gender</div>
+              </div>
+              <hr />
+              <div class="house-container">
+                <div class="house-mobile">House:</div>
+                <div class="house-name">House Name</div>
+                <div class="color-house">O</div>
+              </div>
+              <hr />
+              <div class="blood-container">
+                <div class="blood">Blood:</div>
+                <div class="blood-status">Blood status</div>
+                <div class=""><img src="assets/icons/bi_droplet-fill.svg" alt="" /></div>
+              </div>
+              <hr />
+              <div class="responsibility-container">
+                <div class="responsibility">Responsibility:</div>
+                <div class="yes">Prefect</div>
+                <div class=""><img src="assets/icons/bi_shield-fill.svg" alt="" /></div>
+                <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
+              </div>
+              <hr />
+              <div class="squad-container">
+                <div class="squad">Inquisitorial squad member:</div>
+                <div class="yes">Yes</div>
+                <div class=""><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" /></div>
+                <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
+              </div>
+
+              <div class="expel-student-container">
+                <button class="buttons-modal center"><img src="assets/icons/bi_person-dash.svg" alt="" />Expel student</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
 
       <!------------  Desktop Template   ------------->
 
-      <template id="table-template" class="container">
-        <table>
-          <thead>
-            <tr>
-              <!--Row-->
-              <th>Picture</th>
-              <!--Cell bold-->
-              <th>Fullname</th>
-              <th>Nick name</th>
-              <th>House</th>
-              <th>Resposibility</th>
-              <th>Squad</th>
-              <th>Enrollement</th>
-            </tr>
-            <tr>
-              <td class="photo"><img src="images/images/abbott_h.png" alt="" /></td>
-              <!--Cell normal-->
-              <td class="fullname">
-                <div class="firstname">Hermione</div>
-                <div class="firstname">Jean</div>
-                <div class="firstname">Granger</div>
-              </td>
-              <td class="nickname">Nick name</td>
-              <td class="house">
-                <div class="color-house"></div>
-                Hufflepuff
-              </td>
-              <td class="prefect"><img src="assets/icons/bi_shield-fill.svg" alt="" />Prefect</td>
-              <td class="squad"><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" />Member</td>
-              <td class="enrollement">
-                <button class="buttons-white"><img src="assets/icons/bi_person-dash.svg" alt="" />Expell student</button>
-              </td>
-            </tr>
-          </thead>
-        </table>
+      <template id="table-template">
+        <tr>
+          <td data-field="photo" class="photo"><img src="images/abbott_h.png" alt="" /></td>
+          <!--Cell normal-->
+          <td data-field="firstname">...</td>
+          <td data-field="middlename">...</td>
+          <td data-field="lastname">...</td>
+          <td data-field="nickname">...</td>
+          <td data-field="house">...</td>
+          <td data-field="color-house"><div class="color-house"></div></td>
+          <td data-field="prefect">
+            <img src="assets/icons/bi_shield-fill.svg" alt="" />
+            <p>...</p>
+          </td>
+          <td data-field="squad">
+            <img src="assets/icons/mdi_alpha-i-circle.svg" alt="" />
+            <p>...</p>
+          </td>
+          <td data-field="enrollement">
+            <div class="expel">
+              <button class="buttons-gray"><img src="assets/icons/bi_person-dash.svg" alt="" />Expel</button>
+            </div>
+          </td>
+          <td data-field="open">
+            <button class="buttons-red"><img src="assets/icons/bi_eye.svg" alt="" />Open</button>
+          </td>
+        </tr>
       </template>
 
       <!------------  Mobile Template   ------------->
 
-      <template id="mobile-template" class="container-template">
-        <div class="pic-container">
-          <div class="photo"><img src="images/images/abbott_h.png" alt="" /></div>
-          <div class="icons-container">
-            <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
-            <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
-          </div>
-        </div>
-        <div class="name-container">
-          <div class="name">Hermione Jean Granger</div>
-          <div class="nick-house-container">
-            <div class="nickname">NickName</div>
-            <div class="house">
-              <div class="color-house"></div>
-              <span>Hufflepuff</span>
+      <template id="mobile-template">
+        <div class="container-template">
+          <div class="pic-container">
+            <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
+            <div class="icons-container">
+              <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
+              <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
             </div>
           </div>
+          <div class="name-nick-house-color-wrap">
+            <div class="name-container">
+              <div class="firstname">Hermione</div>
+              <div class="middlename">Jean</div>
+              <div class="lastname">Granger</div>
+              <div class="nickname">NickName</div>
+            </div>
+            <div class="nick-house-container">
+              <div class="house-container">
+                <div class="color-house"></div>
+                <span class="housename">Hufflepuff</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button>
         </div>
-        <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button>
       </template>
     </main>
 
