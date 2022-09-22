@@ -115,7 +115,7 @@ h4 {
 
 .hiden {
   /*Mobile*/
-  display: none;
+  display: none !important;
 }
 
 .visible {
@@ -181,6 +181,7 @@ header {
 .buttons-sort-filter-desktop {
   /*Mobile*/
   display: none;
+  cursor: pointer;
 }
 
 .buttons-sort-filter {
@@ -189,6 +190,7 @@ header {
   display: flex;
   justify-content: start;
   gap: var(--p);
+  cursor: pointer;
 }
 
 /* .filter,
@@ -210,6 +212,7 @@ header {
   /* font-size: 1rem; */
   letter-spacing: 1px;
   background-color: var(--gray);
+  cursor: pointer;
 }
 
 #search {
@@ -259,6 +262,7 @@ header {
   border: none;
   box-shadow: var(--shadow);
   background-color: var(--gray);
+  cursor: pointer;
 }
 
 .buttons-gray {
@@ -276,6 +280,7 @@ header {
   border: none;
   box-shadow: var(--shadow);
   background-color: var(--gray);
+  cursor: pointer;
 }
 
 .buttons-gray .icons {
@@ -299,6 +304,7 @@ header {
 
   box-shadow: var(--shadow);
   background-color: var(--white);
+  cursor: pointer;
 }
 
 .buttons-red {
@@ -317,9 +323,10 @@ header {
   box-shadow: var(--shadow);
   background-color: var(--red);
   color: var(--white);
+  cursor: pointer;
 }
 
-/* Filters and Sort */
+/* modals */
 
 #filter-modal,
 #sort-modal,
@@ -550,7 +557,8 @@ section {
   justify-content: baseline;
 }
 
-.color-house {
+.color-house,
+.house-color {
   width: 1rem;
   height: 1rem;
   border-radius: var(--border-radius-100);
@@ -578,6 +586,25 @@ thead,
   /* Mobile */
   display: none;
   flex-wrap: wrap;
+}
+
+.open,
+.close {
+  cursor: pointer;
+}
+
+.close {
+  width: 36px;
+  height: 36px;
+  background-color: var(--white);
+  /* padding: var(--ps); */
+  border-radius: var(--border-radius-100);
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  right: 1rem;
+  top: -1rem;
+  box-shadow: var(--shadow);
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -710,8 +737,16 @@ thead,
     flex-wrap: wrap;
   }
 
+  thead,
+  th {
+    display: flex;
+    font-size: smaller;
+    justify-content: space-around;
+    width: 100%;
+    /* border-left: 1px solid #ccc; */
+  }
+
   tr,
-  th,
   td {
     display: flex;
     flex-direction: row;
@@ -720,18 +755,15 @@ thead,
     text-align: center;
     gap: 1rem;
     font-size: 1rem;
-    /* padding: var(--p); */
     width: 100%;
   }
 
   tr {
     min-width: 1280px;
-    /* border-radius: var(--border-radius-10); */
     border-bottom: 1px solid #ddd;
-    /* box-shadow: var(--shadow); */
-    /* padding: 8px; */
     margin: var(--mb);
   }
+
   th,
   td {
     padding: 1rem 0;
@@ -806,25 +838,9 @@ thead,
 
   /* .student-info {
     width: 50%; */
-  }
-
   .modal-filter,
   .modal-sort,
   .modal-student {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--white);
-    width: 100%;
-    border-radius: var(--border-radius-10);
-
-    margin: var(--mtb-large);
     width: 30%;
   }
 
@@ -851,28 +867,12 @@ thead,
   .gender-status,
   .house-name,
   .blood-status,
-  .yes {
+  .yes,
+  .prefect {
     font-size: 1rem;
   }
 
   .expel-student-container {
-    
     margin: var(--mtb-large);
   }
-
-  /* #filter select option[value="Filter All"] {
-    background-image: url("/assets/icons/bi_filter.svg");
-  }
-  select#filter option[value="Filter by resposibility"] {
-    background-image: url(assets/icons/bi_filter.svg);
-  }
-  select#filter option[value="Filter by expelled"] {
-    background-image: url(assets/icons/bi_filter.svg);
-  }
-  select#filter option[value="Filter by non-expelled"] {
-    background-image: url(assets/icons/bi_filter.svg);
-  }
-  select#filter option[value="Filter by house"] {
-    background-image: url(assets/icons/bi_filter.svg);
-  } */
 }

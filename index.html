@@ -36,10 +36,10 @@
               <select id="sorts-mobile" required="" class="sort-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
                 <option>All</option>
-                <option>Sort by first name</option>
-                <option>Sort by last name</option>
-                <option>Sort by enrolled</option>
-                <option>Sort by non-enrolled</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="firstName">Sort by first name</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="lastName">Sort by last name</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="house">Sort by house</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="all">All</option>
                 <!-- </optgroup> -->
               </select>
             </div>
@@ -49,11 +49,14 @@
               <button class="icons"><img src="assets/icons/bi_sliders.svg" /></button>
               <select id="filter-mobile" required="" class="filter-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
-                <option>Filter All</option>
-                <option>Filter by resposibility</option>
-                <option>Filter by expelled</option>
-                <option>Filter by enrolled</option>
-                <option>Filter by house</option>
+                <option data-action="filter" data-filter="all">Filter All</option>
+                <option data-action="filter" data-filter="responsibility">Filter by resposibility</option>
+                <option data-action="filter" data-filter="expelled">Filter by expelled</option>
+                <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
+                <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
+                <option data-action="filter" data-filter="Hufflepuff">Filter by Hufflepuff house</option>
+                <option data-action="filter" data-filter="Ravenclaw">Filter by Ravenclaw house</option>
+                <option data-action="filter" data-filter="Gryffindor">Filter by Gryffindor house</option>
                 <!-- </optgroup> -->
               </select>
             </div>
@@ -75,11 +78,10 @@
               <button class="icons"><img src="assets/icons/bi_filter.svg" /></button>
               <select id="sorts-desk" required="" class="sort-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
-                <option>Sort by first name</option>
-                <option>Sort by last name</option>
-                <option>Sort by enrolled</option>
-                <option>Sort by expelled</option>
-                <option>All</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="firstName">Sort by first name</option>
+                <option data-action="sort" data-sort-direction="desc" data-sort="lastName">Sort by last name</option>
+                <option data-action="sort" data-sort-direction="asc" data-sort="house">Sort by house</option>
+                <option data-action="sort" data-sort-direction="desc" data-sort="all">All</option>
                 <!-- </optgroup> -->
               </select>
             </div>
@@ -89,11 +91,14 @@
               <button class="icons"><img src="assets/icons/bi_sliders.svg" /></button>
               <select id="filter-desk" required="" class="filter-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
-                <option>Filter All</option>
-                <option>Filter by resposibility</option>
-                <option>Filter by expelled</option>
-                <option>Filter by enrolled</option>
-                <option>Filter by house</option>
+                <option data-action="filter" data-filter="all">Filter All</option>
+                <option data-action="filter" data-filter="responsibility">Filter by resposibility</option>
+                <option data-action="filter" data-filter="expelled">Filter by expelled</option>
+                <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
+                <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
+                <option data-action="filter" data-filter="Hufflepuff">Filter by Hufflepuff house</option>
+                <option data-action="filter" data-filter="Ravenclaw">Filter by Ravenclaw house</option>
+                <option data-action="filter" data-filter="Gryffindor">Filter by Gryffindor house</option>
                 <!-- </optgroup> -->
               </select>
             </div>
@@ -161,7 +166,7 @@
             <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
-              <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
+              <div class="prefect-icon"><img src="assets/icons/bi_shield-shaded.svg" /></div>
             </div>
           </div>
           <div class="name-container">
@@ -190,10 +195,10 @@
                 <th>Middle Name</th>
                 <th>Last Name</th>
                 <th>Nick name</th>
-                <th>Color</th>
                 <th>House</th>
+                <th>Color</th>
                 <th>Resposibility</th>
-                <th>Squad</th>
+                <th>Inquisitorial Squad</th>
                 <th>Enrollement</th>
                 <th>More info</th>
               </tr>
@@ -204,10 +209,11 @@
           </table>
         </section>
 
-        <!-- Sort Modal -->
+        <!-- Student Modal -->
 
-        <div id="student-modal" class="">
+        <div id="student-modal" class="hiden">
           <div class="modal-student">
+            <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
             <div class="student-info">
               <div class="photo-container">
                 <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
@@ -227,7 +233,7 @@
               <div class="house-container">
                 <div class="house-mobile">House:</div>
                 <div class="house-name">House Name</div>
-                <div class="color-house">O</div>
+                <div class="house-color"></div>
               </div>
               <hr />
               <div class="blood-container">
@@ -238,15 +244,17 @@
               <hr />
               <div class="responsibility-container">
                 <div class="responsibility">Responsibility:</div>
-                <div class="yes">Prefect</div>
-                <div class=""><img src="assets/icons/bi_shield-fill.svg" alt="" /></div>
+                <div class="prefect">No</div>
+                <div class="shield"><img src="assets/icons/bi_shield-shaded.svg" alt="" /></div>
+                <button class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
                 <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
               </div>
               <hr />
               <div class="squad-container">
                 <div class="squad">Inquisitorial squad member:</div>
                 <div class="yes">Yes</div>
-                <div class=""><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" /></div>
+                <div class="i"><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" /></div>
+                <button class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
                 <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
               </div>
 
@@ -271,11 +279,13 @@
           <td data-field="house">...</td>
           <td data-field="color-house"><div class="color-house"></div></td>
           <td data-field="prefect">
-            <img src="assets/icons/bi_shield-fill.svg" alt="" />
+            <img src="" alt="" />
             <p>...</p>
+            <button data-action="add" data-add="add-prefect" class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
+            <button class="remove buttons-modal hiden"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
           </td>
           <td data-field="squad">
-            <img src="assets/icons/mdi_alpha-i-circle.svg" alt="" />
+            <img src="" alt="" />
             <p>...</p>
           </td>
           <td data-field="enrollement">
@@ -284,7 +294,7 @@
             </div>
           </td>
           <td data-field="open">
-            <button class="buttons-red"><img src="assets/icons/bi_eye.svg" alt="" />Open</button>
+            <button class="buttons-red open"><img src="assets/icons/bi_eye.svg" alt="" />Edit</button>
           </td>
         </tr>
       </template>
@@ -297,7 +307,7 @@
             <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
-              <div class="prefect-icon"><img src="assets/icons/bi_shield-fill.svg" /></div>
+              <div class="prefect-icon"><img src="assets/icons/bi_shield-shaded.svg" /></div>
             </div>
           </div>
           <div class="name-nick-house-color-wrap">
