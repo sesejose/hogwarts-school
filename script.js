@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 //Global variables
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
+const urlBlood = "https://petlatkea.dk/2021/hogwarts/families.json";
 //Creating an Array to be filled with all the Objects (Students).
 let arrStudents = [];
 //Then I create the PROTOTYPE as a variable for that object named Student.
@@ -19,17 +20,32 @@ const Student = {
   colorHouse: "",
   image: "",
   bloodStatus: "",
-  bloodIcon: "",
   prefect: false,
-  prefectIcon: "",
   squad: false,
-  squadIcon: "",
+  expelled: false,
   gender: "",
 };
 
+//Array expelled Students
+let arrExpelled = [];
+
+//Protorype for the pures blood family
+const PureObj = {
+  lastName: "",
+  bloodStatus: "",
+};
+//Prototype for the half blood family
+const HalfObj = {
+  lastName: "",
+  bloodStatus: "",
+};
+//Creating the Arrays to be filled with all the Objects (Blood Status).
+let arrPure = [];
+let arrHalf = [];
+
 //New array with prefects
 let arrPrefects = [];
-let prefect;
+// let prefect;
 //Variables used by the Student Modal
 const shield = document.querySelector(".responsibility-container .shield");
 const remove = document.querySelector(".responsibility-container .remove");
@@ -48,6 +64,7 @@ function start() {
   console.log("ready");
   //Add event listeners to filter and sort buttons
   buttonsFilterSort();
+  search();
   loadJSON();
 }
 
@@ -62,22 +79,22 @@ async function loadJSON() {
   const jsonData = await response.json();
   //When loaded prepare data
   prepareData(jsonData);
+  console.log(jsonData); //This is an orray of objects
 }
 
 function prepareData(jsonData) {
   arrStudents = jsonData.map(prepareObject);
-  //Display New List
+
   displayList(arrStudents);
-  //Amount of students in the list
+
   const amountArrStudents = arrStudents.length;
   document.querySelector("span").textContent = amountArrStudents;
+  document.querySelector(".title h1").textContent = "All Hogwarts School students";
   console.log(amountArrStudents);
 }
 
 function prepareObject(jsonObject) {
   const student = Object.create(Student); //Create the student object.
-  console.log("34:", student);
-  console.log("Arr:", arrStudents);
   // Removing white spaces
   //Cleaning the JSON and defining the properties for the student object.
   const fullname = jsonObject.fullname.trim();
@@ -136,6 +153,70 @@ function prepareObject(jsonObject) {
   //Defining Responsibility
   student.squad = false;
 
+  // Blood status
+
+  loadJSONBlood();
+
+  async function loadJSONBlood() {
+    const response = await fetch(urlBlood);
+    const jsonDataBlood = await response.json();
+    // prepareDataBlood(jsonDataBlood);
+    // console.log(jsonDataBlood); // But this is an object - with properties: arrays
+    student.bloodStatus = compareObjects(jsonDataBlood);
+  }
+
+  function compareObjects(jsonDataBlood) {
+    if (jsonDataBlood.pure.includes(student.lastName) == true) {
+      return "Pureblood";
+    } else {
+      jsonDataBlood.half.includes(student.lastName) == true;
+      return "Halfblood";
+    }
+  }
+
+  // function prepareDataBlood(jsonDataBlood) {
+  //   const arrLastNamesPure = Object.values(jsonDataBlood.pure);
+  //   // console.log(arrLastNamesPure);
+  //   const arrLastNamesHalf = Object.values(jsonDataBlood.half);
+  //   // console.log(arrLastNamesHalf);
+  //   arrPure = arrLastNamesPure.map(preparePureObj);
+  //   arrHalf = arrLastNamesHalf.map(prepareHalfObj);
+  // }
+
+  // //Defining the Pure object
+  // function preparePureObj(lastnames) {
+  //   const pureObj = Object.create(PureObj); //Create the Pure object.
+  //   // console.log(lastnames);
+  //   pureObj.lastName = lastnames;
+  //   pureObj.bloodStatus = "Pure";
+  //   // console.log(pureObj);
+  //   return pureObj;
+  // }
+
+  // //Defining the Half object
+  // function prepareHalfObj(lastnames) {
+  //   const halfObj = Object.create(HalfObj); //Create the Pure object.
+  //   // console.log(arrPureObj);
+  //   halfObj.lastName = lastnames;
+  //   halfObj.bloodStatus = "Half";
+  //   // console.log(halfObj);
+  //   return halfObj;
+  // }
+
+  // compareObjects();
+  // function compareObjects() {
+  //   const pureObj = preparePureObj;
+  //   const halfObj = prepareHalfObj;
+  //   console.log(pureObj, HalfObj);
+  //  if(....) but still not working ..
+  // }
+
+  // function displayListBloodStatus(arrPure, arrHalf) {
+  //   console.table("Display List Of Pure and Half Arrays Works!");
+  // }
+
+  //////////////////////////////////////////////////////////
+
   //Creating Array of objects
   arrStudents.push(student);
 
@@ -144,11 +225,26 @@ function prepareObject(jsonObject) {
 
 //CONTROLER ///////////////////////////
 
+//* Search
+function search() {
+  const searchBar = document.getElementById("search-field");
+  searchBar.addEventListener("keyup", (event) => {
+    const text = event.target.value.substring(0, 1).toUpperCase() + event.target.value.substring(1).toLowerCase();
+    const filteredStudents = arrStudents.filter((student) => {
+      return student.firstName.includes(text) || student.lastName.includes(text);
+    });
+    // console.log(filteredStudents);
+    displayList(filteredStudents);
+  });
+}
+
 // Filter by Houses / Called back from buttonsFilterSort
 function selectfilter(event) {
   const filter = event.target.dataset.filter; //data-action
   console.log(`user selected: ${filter}`);
-  filterHouses(filter);
+  // filterHouses(filter);
+  // filterResponsibility(filter);
+  filterStudents(filter);
 }
 // Sort by Names / Called back from buttonsFilterSort
 function selectSort(event) {
@@ -165,29 +261,33 @@ function selectSort(event) {
   sortStudents(sort, sortDir);
 }
 
-//Filter by House
-function filterHouses(houseName) {
-  let filteredHouses = arrStudents;
+// Filter Students
+function filterStudents(param) {
+  let filteredStudents = arrStudents;
 
-  if (houseName === "Slytherin") {
+  if (param === "Slytherin") {
     //Create a list with Slytherin houses
-    filteredHouses = arrStudents.filter(isS);
-  } else if (houseName === "Hufflepuff") {
+    filteredStudents = arrStudents.filter(isS);
+  } else if (param === "Hufflepuff") {
     //Create a list with Slytherin houses
-    filteredHouses = arrStudents.filter(isH);
-  } else if (houseName === "Ravenclaw") {
+    filteredStudents = arrStudents.filter(isH);
+  } else if (param === "Ravenclaw") {
     //Create a list with Slytherin houses
-    filteredHouses = arrStudents.filter(isR);
-  } else if (houseName === "Gryffindor") {
+    filteredStudents = arrStudents.filter(isR);
+  } else if (param === "Gryffindor") {
     //Create a list with Slytherin houses
-    filteredHouses = arrStudents.filter(isG);
+    filteredStudents = arrStudents.filter(isG);
+  } else if (param === true) {
+    //Create a list with Prefects
+    filteredStudents = arrStudents.filter(isPrefect);
   }
 
-  displayList(filteredHouses);
+  displayList(filteredStudents);
 
-  const houseStudents = filteredHouses.length;
-  document.querySelector("span").textContent = houseStudents;
-  console.log(houseStudents);
+  const number = filteredStudents.length;
+  document.querySelector("span").textContent = number;
+  document.querySelector(".title h1").textContent = `${param} students`;
+  console.log(number);
 }
 
 function isS(student) {
@@ -222,6 +322,17 @@ function isG(student) {
   }
 }
 
+function isPrefect(student) {
+  if (student.prefect === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//Filter by Expelled
+//Filter by Enrolled
+
 //Sort
 //This function down here WORKS I can also use it with filters!
 //Just remember to update the call back function in selectFilter or selectSort functions.
@@ -245,7 +356,7 @@ function sortStudents(sortBy, sortDir) {
   displayList(sortedProperties);
 }
 
-// //Sort by Property
+// // Sort by Property - A not generic function!
 
 // function sorByProperty(sortBy) {
 //   let sortedProperties = arrStudents;
@@ -285,10 +396,6 @@ function sortStudents(sortBy, sortDir) {
 //   }
 // }
 
-// Filter by Responsibility
-//Filter by Expelled
-//Filter by Enrolled
-
 // VIEW ///////////////////////////////////////////
 function displayList(arrStudents) {
   //Clear the list
@@ -310,33 +417,120 @@ function displayStudent(student) {
   clone.querySelector("[data-field=nickname]").textContent = student.nickName;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector(".color-house").style.backgroundColor = student.colorHouse;
-  // clone.querySelector("[data-field=prefect] p").textContent = "";
-  clone.querySelectorAll("[data-action='add']").forEach((add) => add.addEventListener("click", addPrefect));
 
-  function addPrefect(event) {
-    console.log(event);
-    // const addPrefect = event.target.dataset.add; //Dataset is the data-action (?)
-    // console.log(`user has clicked ${addPrefect}`);
-    // addPrefect(student);
+  //Prefect Desktop
+  if (student.prefect === false) {
+    clone.querySelector("[data-field=prefect] .add").classList.remove("hiden");
+    clone.querySelector("[data-field=prefect] .add").addEventListener("click", clickPrefect);
+    clone.querySelector("[data-field=prefect] .remove").classList.add("hiden");
+    clone.querySelector("[data-field=prefect] .pr").textContent = "None";
+    clone.querySelector("[data-field=prefect] img").src = "";
+  } else if (student.prefect === true) {
+    clone.querySelector("[data-field=prefect] .add").classList.add("hiden");
+    clone.querySelector("[data-field=prefect] .remove").classList.remove("hiden");
+    clone.querySelector("[data-field=prefect] .remove").addEventListener("click", clickPrefect);
+    clone.querySelector("[data-field=prefect] .pr").textContent = "Prefect";
+    clone.querySelector("[data-field=prefect] img").src = iconShield;
+  }
+
+  //Prefect Desktop
+  function clickPrefect() {
+    let arrPrefects = arrStudents;
+    prefectState(arrPrefects);
+  }
+  //Prefect Desktop
+  function prefectState(arrPrefects) {
     if (student.prefect === true) {
       student.prefect = false;
     } else {
       student.prefect = true;
     }
+
+    displayList(arrPrefects);
   }
 
-  //Prefect
+  // addOnlyFour();
 
-  if (student.prefect === true) {
-    console.log("Prefect");
-  } else {
-    console.log("No Prefect");
+  // //Prefect Desktop Allowed Amount
+  // function addOnlyFour() {
+  //   const amountPrefects = arrStudents.filter((student) => student.prefect === true).length;
+  //   const amountSlytherin = arrStudents.filter((student) => student.house === "Slytherin");
+  //   const amountHufflepuff = arrStudents.filter((student) => student.house === "Hufflepuff");
+  //   const amountGryffindor = arrStudents.filter((student) => student.house === "Gryffindor");
+  //   const amountRavenclaw = arrStudents.filter((student) => student.house === "Ravenclaw");
+
+  //   if (amountPrefects <= 3) {
+  //     clone.querySelectorAll("[data-field=prefect] .add").forEach((state) => state.removeEventListener("click", loadReachAmount));
+  //     clone.querySelectorAll("[data-field=prefect] .add").forEach((state) => state.addEventListener("click", clickPrefect));
+  //     clone.querySelectorAll("[data-field=prefect] .remove").forEach((state) => state.addEventListener("click", clickPrefect));
+  //   } else {
+  //     clone.querySelectorAll("[data-field=prefect] .add").forEach((state) => state.removeEventListener("click", clickPrefect));
+  //     clone.querySelectorAll("[data-field=prefect] .remove").forEach((state) => state.addEventListener("click", clickPrefect));
+  //     clone.querySelectorAll("[data-field=prefect] .add").forEach((state) => state.addEventListener("click", loadReachAmount));
+  //     //Close modal call back function
+  //     document.querySelector(".modal-reached-amount .close").addEventListener("click", closeModal);
+  //   }
+  // }
+
+  // //Prefect Amount
+  // function loadReachAmount() {
+  //   document.querySelector("#reachedAmount").classList.remove("hiden");
+  // }
+
+  //Squad Desktop
+  if (student.squad === false) {
+    clone.querySelector("[data-field=squad] .add-squad").classList.remove("hiden");
+    clone.querySelector("[data-field=squad] .add-squad").addEventListener("click", clickSquad);
+    clone.querySelector("[data-field=squad] .remove-squad").classList.add("hiden");
+    clone.querySelector("[data-field=squad] .sq").textContent = "None";
+    clone.querySelector("[data-field=squad] img").src = "";
+  } else if (student.squad === true) {
+    clone.querySelector("[data-field=squad] .add-squad").classList.add("hiden");
+    clone.querySelector("[data-field=squad] .remove-squad").classList.remove("hiden");
+    clone.querySelector("[data-field=squad] .remove-squad").addEventListener("click", clickSquad);
+    clone.querySelector("[data-field=squad] .sq").textContent = "Member";
+    clone.querySelector("[data-field=squad] img").src = iconSquad;
+  }
+
+  //Squad Desktop
+  function clickSquad() {
+    let arrMembers = arrStudents;
+    squadState(arrMembers);
+  }
+  //Squad Desktop
+  function squadState(arrMembers) {
+    if (student.squad === true) {
+      student.squad = false;
+    } else {
+      student.squad = true;
+    }
+
+    displayList(arrMembers);
+  }
+
+  //Expell student
+  clone.querySelector(".expel button").addEventListener("click", expelStudent);
+
+  function expelStudent(obj) {
+    obj = student;
+    if (obj.expelled === false) {
+      arrStudents.splice(arrStudents.indexOf(obj), 1);
+    }
+    obj.expelled = true;
+    arrExpelled.push(obj);
+    //Console.log
+    console.log(obj);
+    console.log(arrStudents);
+    console.log(arrExpelled);
+    // const removeObj = arrStudents.filter("student")
+    displayList(arrStudents);
   }
 
   // Open / Display Modal Student
   clone.querySelector(".open").addEventListener("click", () => {
     openModal();
     //Modal Student
+    document.querySelector(".photo-container img").src = student.image;
     document.querySelector(".fullname .firstname").textContent = student.firstName;
     document.querySelector(".fullname .middlename").textContent = student.middleName;
     document.querySelector(".fullname .lastname").textContent = student.lastName;
@@ -344,35 +538,46 @@ function displayStudent(student) {
     document.querySelector(".gender-container .gender-status").textContent = student.gender;
     document.querySelector(".house-container .house-name").textContent = student.house;
     document.querySelector(".house-container .house-color").style.backgroundColor = student.colorHouse;
-    //Prefect
-    // document.querySelector(".responsibility-container .add").addEventListener("click", addPrefect);
-    // document.querySelector(".responsibility-container .remove").addEventListener("click", removePrefect);
-    //Squad
-    document.querySelector(".squad-container .yes").textContent = "No";
-    document.querySelector(".squad-container .i").classList.add("hiden");
-    document.querySelector(".squad-container .remove").classList.add("hiden");
+
+    //Blood Status
+    document.querySelector(".blood-status").textContent = student.bloodStatus;
+
+    //Prefect Modal
+    if (student.prefect === false) {
+      //Add Prefect Modal
+      document.querySelector(".responsibility-container .add").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").addEventListener("click", clickPrefect);
+      document.querySelector(".responsibility-container .remove").classList.add("hiden");
+      document.querySelector(".responsibility-container .prefect").textContent = "None";
+      document.querySelector(".responsibility-container .shield img").src = "";
+    } else {
+      //Remove Prefect Modal
+      document.querySelector(".responsibility-container .add").classList.add("hiden");
+      document.querySelector(".responsibility-container .remove").classList.remove("hiden");
+      document.querySelector(".responsibility-container .remove").addEventListener("click", clickPrefect);
+      document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
+      document.querySelector(".responsibility-container .shield img").src = iconShield;
+    }
+
+    //Squad Modal
+    if (student.squad === false) {
+      //Add Squad Modal
+      document.querySelector(".squad-container .add-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").addEventListener("click", clickSquad);
+      document.querySelector(".squad-container .remove-squad").classList.add("hiden");
+      document.querySelector(".squad-container .yes").textContent = "None";
+      document.querySelector(".squad-container .i img").src = "";
+    } else {
+      //Remove Squad Modal
+      document.querySelector(".squad-container .add-squad").classList.add("hiden");
+      document.querySelector(".squad-container .remove-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .remove-squad").addEventListener("click", clickSquad);
+      document.querySelector(".squad-container .yes").textContent = "Member";
+      document.querySelector(".squad-container .i img").src = iconSquad;
+    }
+
     //Close Student Modal
-    document.querySelector(".close").addEventListener("click", closeModal);
-
-    // //Hide Prefect
-    // function hidePrefect() {
-    //   //Hide remove button
-    //   document.querySelector(".responsibility-container .add").classList.remove("hiden");
-    //   document.querySelector(".responsibility-container .remove").classList.add("hiden");
-    //   document.querySelector(".responsibility-container .prefect").textContent = "No";
-    //   document.querySelector(".responsibility-container .shield").classList.add("hiden");
-    // }
-
-    // //Prefect Modal
-    // if (student.prefect === true) {
-    //   document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
-    //   document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
-    //   document.querySelector(".responsibility-container .add").classList.add("hiden");
-    //   document.querySelector(".responsibility-container .remove").classList.remove("hiden");
-    //   document.querySelector(".responsibility-container .shield").classList.remove("hiden");
-    // } else {
-    //   document.querySelector(".responsibility-container .prefect").textContent = "No";
-    // }
+    document.querySelector(".modal-student .close").addEventListener("click", closeModal);
   });
 
   //Append Template Desktop
@@ -391,13 +596,74 @@ function displayStudent(student) {
   cloneMobile.querySelector(".house-container .color-house").style.backgroundColor = student.colorHouse;
   cloneMobile.querySelector(".prefect-icon").classList.add("hiden");
   cloneMobile.querySelector(".i-icon").classList.add("hiden");
+
   // //Prefect Mobile
-  // if (student.prefect === true) {
-  //   // //In mobile
-  //   cloneMobile.querySelector(".prefect-icon").classList.remove("hiden");
-  // } else {
-  //   cloneMobile.querySelector(".prefect-icon").classList.add("hiden");
-  // }
+  if (student.prefect === true) {
+    // //In mobile
+    cloneMobile.querySelector(".prefect-icon").classList.remove("hiden");
+  } else {
+    cloneMobile.querySelector(".prefect-icon").classList.add("hiden");
+  }
+
+  // //Squad Mobile
+  if (student.squad === true) {
+    // //In mobile
+    cloneMobile.querySelector(".i-icon").classList.remove("hiden");
+  } else {
+    cloneMobile.querySelector(".i-icon").classList.add("hiden");
+  }
+
+  //Expel from Mobile
+  cloneMobile.querySelector("button").addEventListener("click", expelStudent);
+
+  cloneMobile.querySelector(".pic-container").addEventListener("click", () => {
+    openModal();
+    //Modal Student Mobile
+    document.querySelector(".photo-container img").src = student.image;
+    document.querySelector(".fullname .firstname").textContent = student.firstName;
+    document.querySelector(".fullname .middlename").textContent = student.middleName;
+    document.querySelector(".fullname .lastname").textContent = student.lastName;
+    document.querySelector(".fullname .nickname").textContent = student.nickName;
+    document.querySelector(".gender-container .gender-status").textContent = student.gender;
+    document.querySelector(".house-container .house-name").textContent = student.house;
+    document.querySelector(".house-container .house-color").style.backgroundColor = student.colorHouse;
+
+    //Prefect Mobile Modal
+    if (student.prefect === false) {
+      //Add Prefect Modal
+      document.querySelector(".responsibility-container .add").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").addEventListener("click", clickPrefect);
+      document.querySelector(".responsibility-container .remove").classList.add("hiden");
+      document.querySelector(".responsibility-container .prefect").textContent = "None";
+      document.querySelector(".responsibility-container .shield img").src = "";
+    } else {
+      //Remove Prefect Mobile Modal
+      document.querySelector(".responsibility-container .add").classList.add("hiden");
+      document.querySelector(".responsibility-container .remove").classList.remove("hiden");
+      document.querySelector(".responsibility-container .remove").addEventListener("click", clickPrefect);
+      document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
+      document.querySelector(".responsibility-container .shield img").src = iconShield;
+    }
+
+    //Squad Modal
+    if (student.squad === false) {
+      //Add Squad Modal
+      document.querySelector(".squad-container .add-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").addEventListener("click", clickSquad);
+      document.querySelector(".squad-container .remove-squad").classList.add("hiden");
+      document.querySelector(".squad-container .yes").textContent = "None";
+      document.querySelector(".squad-container .i img").src = "";
+    } else {
+      //Remove Squad Modal
+      document.querySelector(".squad-container .add-squad").classList.add("hiden");
+      document.querySelector(".squad-container .remove-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .remove-squad").addEventListener("click", clickSquad);
+      document.querySelector(".squad-container .yes").textContent = "Member";
+      document.querySelector(".squad-container .i img").src = iconSquad;
+    }
+    //Close Student Modal
+    document.querySelector(".modal-student .close").addEventListener("click", closeModal);
+  });
 
   const parentMobile = document.querySelector("#parent-mobile");
   parentMobile.appendChild(cloneMobile);
@@ -410,38 +676,8 @@ function openModal() {
 //Close Student Modal
 function closeModal() {
   document.querySelector("#student-modal").classList.add("hiden");
+  document.querySelector("#reachedAmount").classList.add("hiden");
 }
-
-//Add Responsibility
-
-//Search
-// const searchBar = document.querySelector("#search-field");
-// //Select input field
-// searchBar.addEventListener("keyup", searchStudent);
-// //By typing user calls the function
-// function searchStudent(e) {
-//   const text = e.target.value.substring(0, 1).toUpperCase() + e.target.value.substring(1).toLowerCase();
-//   //The function identify the target and convertes it to Lower Case ..
-//   // console.log(text);
-//   arrStudents.forEach(function (student) {
-//     //Evaluates if the object in the array has the same value
-//     if (student.firstName.value === text.value) {
-//       const filterName = arrStudents.filter(isName);
-//       displayList(filterName);
-//     } else {
-//       console.log("doesn't work!");
-//     }
-//   });
-// }
-
-// function isName(student) {
-//   const inputValue = document.getElementById("search-field").value;
-//   if (student.firstName === inputValue.value) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
 
 //console.log(fullname);
 // console.log(spaces);
@@ -453,3 +689,5 @@ function closeModal() {
 // console.log(student.house);
 // console.log(arrStudents);
 // console.log(student.image);
+
+///////////////////////

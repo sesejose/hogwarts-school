@@ -21,7 +21,13 @@
 
   --ms: 0.5rem;
 
+  --m-large: 3rem;
+
   --mtb: 1rem 0;
+
+  --mtb-auto: 1rem auto;
+
+  --mtb-medium: 2rem auto;
 
   --mlr: 0 1rem;
 
@@ -283,6 +289,23 @@ header {
   cursor: pointer;
 }
 
+.button-expel {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  border-radius: var(--border-radius-10);
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  border: none;
+  box-shadow: var(--shadow);
+  background-color: var(--gray);
+  cursor: pointer;
+}
+
 .buttons-gray .icons {
   box-shadow: none;
   background-color: var(--gray);
@@ -330,7 +353,8 @@ header {
 
 #filter-modal,
 #sort-modal,
-#student-modal {
+#student-modal,
+#reachedAmount {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -345,7 +369,8 @@ header {
 
 .modal-filter,
 .modal-sort,
-.modal-student {
+.modal-student,
+.modal-reached-amount {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -353,14 +378,30 @@ header {
   right: 0;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--white);
   width: 100%;
   border-radius: var(--border-radius-10);
+  padding: var(--p);
 
+  margin: var(--mtb-medium);
+  width: 80%;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin: var(--m-large);
+}
+
+.modal-container img {
+  width: 4rem;
   margin: var(--mtb-large);
-  width: 90%;
 }
 
 .modal-filter ul,
@@ -433,6 +474,10 @@ header {
   align-items: end;
 }
 
+.expel-student-container {
+  margin: var(--mtb-auto);
+}
+
 /*Main*/
 
 main {
@@ -479,6 +524,7 @@ section {
   flex-flow: column;
   width: 64px;
   height: 64px;
+  cursor: pointer;
 }
 
 .photo img {
@@ -840,8 +886,10 @@ thead,
     width: 50%; */
   .modal-filter,
   .modal-sort,
-  .modal-student {
+  .modal-student,
+  .modal-reached-amount {
     width: 30%;
+    padding: var(--p);
   }
 
   .photo-container .photo img {

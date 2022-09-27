@@ -50,7 +50,7 @@
               <select id="filter-mobile" required="" class="filter-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
                 <option data-action="filter" data-filter="all">Filter All</option>
-                <option data-action="filter" data-filter="responsibility">Filter by resposibility</option>
+                <option data-action="filter" data-filter="prefect">Filter by resposibility</option>
                 <option data-action="filter" data-filter="expelled">Filter by expelled</option>
                 <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
                 <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
@@ -92,7 +92,7 @@
               <select id="filter-desk" required="" class="filter-options">
                 <!-- <optgroup label="Option Group" class="group"> -->
                 <option data-action="filter" data-filter="all">Filter All</option>
-                <option data-action="filter" data-filter="responsibility">Filter by resposibility</option>
+                <option data-action="filter" data-filter="prefect">Filter by resposibility</option>
                 <option data-action="filter" data-filter="expelled">Filter by expelled</option>
                 <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
                 <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
@@ -109,7 +109,7 @@
 
           <div id="search">
             <div class="search-container">
-              <form class="form-search" action="">
+              <form class="form-search" action="search">
                 <input id="search-field" class="input" type="text" placeholder="Search.." name="search" />
                 <button class="icons" type="submit">
                   <img src="assets/icons/bi_search.svg" width="16px" alt="" />
@@ -124,6 +124,21 @@
     </header>
 
     <main>
+      <!-- Reached Amount Modal -->
+
+      <div id="reachedAmount" class="hiden">
+        <div class="modal-reached-amount">
+          <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
+          <div class="modal-container">
+            <img src="assets/icons/bi_shield-shaded.svg" alt="" />
+            <h2>
+              You have reached the amount allowed of prefects at Hogwarts School.<br /><br />
+              Four (4) 4 is the maximum allowed, Remove some of them to select a new one.
+            </h2>
+          </div>
+        </div>
+      </div>
+
       <!-- Sort Modal -->
 
       <!-- <div id="sort-modal" class="hiden">
@@ -144,7 +159,7 @@
         <div class="modal-filter">
           <ul class="filters">
             <li class="filter-house"><a href="#">Filter house</a></li>
-            <li class="filter-responsibility"><a href="#">Filter resposibility</a></li>
+            <li class="filter-prefect"><a href="#">Filter resposibility</a></li>
             <li class="filter-expelled"><a href="#">Filter expelled</a></li>
             <li class="filter-non-expelled"><a href="#">Filter non-expelled</a></li>
           </ul>
@@ -196,9 +211,9 @@
                 <th>Last Name</th>
                 <th>Nick name</th>
                 <th>House</th>
-                <th>Color</th>
+                <!-- <th>Color</th> -->
                 <th>Resposibility</th>
-                <th>Inquisitorial Squad</th>
+                <th>Inq. Squad</th>
                 <th>Enrollement</th>
                 <th>More info</th>
               </tr>
@@ -245,7 +260,7 @@
               <div class="responsibility-container">
                 <div class="responsibility">Responsibility:</div>
                 <div class="prefect">No</div>
-                <div class="shield"><img src="assets/icons/bi_shield-shaded.svg" alt="" /></div>
+                <div class="shield"><img src="" alt="" /></div>
                 <button class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
                 <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
               </div>
@@ -253,13 +268,13 @@
               <div class="squad-container">
                 <div class="squad">Inquisitorial squad member:</div>
                 <div class="yes">Yes</div>
-                <div class="i"><img src="assets/icons/mdi_alpha-i-circle.svg" alt="" /></div>
-                <button class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
-                <button class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
+                <div class="i"><img src="" alt="" /></div>
+                <button class="add-squad buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
+                <button class="remove-squad buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
               </div>
 
               <div class="expel-student-container">
-                <button class="buttons-modal center"><img src="assets/icons/bi_person-dash.svg" alt="" />Expel student</button>
+                <button class="button-expel"><img src="assets/icons/bi_person-dash.svg" alt="" />Expel student</button>
               </div>
             </div>
           </div>
@@ -280,13 +295,15 @@
           <td data-field="color-house"><div class="color-house"></div></td>
           <td data-field="prefect">
             <img src="" alt="" />
-            <p>...</p>
+            <p class="pr">...</p>
             <button data-action="add" data-add="add-prefect" class="add buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
-            <button class="remove buttons-modal hiden"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
+            <button data-action="remove" data-add="remove-prefect" class="remove buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
           </td>
           <td data-field="squad">
             <img src="" alt="" />
-            <p>...</p>
+            <p class="sq">...</p>
+            <button data-action="add" data-add="add-squad" class="add-squad buttons-modal"><img src="assets/icons/bi_plus-circle.svg" alt="" />Add</button>
+            <button data-action="remove" data-add="remove-squad" class="remove-squad buttons-modal"><img src="assets/icons/bi_dash-circle.svg" alt="" />Remove</button>
           </td>
           <td data-field="enrollement">
             <div class="expel">
@@ -294,7 +311,7 @@
             </div>
           </td>
           <td data-field="open">
-            <button class="buttons-red open"><img src="assets/icons/bi_eye.svg" alt="" />Edit</button>
+            <button class="buttons-red open"><img src="assets/icons/bi_eye.svg" alt="" />Open</button>
           </td>
         </tr>
       </template>
@@ -303,6 +320,7 @@
 
       <template id="mobile-template">
         <div class="container-template">
+          <!-- <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div> -->
           <div class="pic-container">
             <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
             <div class="icons-container">
