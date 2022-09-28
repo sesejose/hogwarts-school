@@ -11,7 +11,7 @@
     <!-- Header -->
     <header>
       <div id="logo" class="center">
-        <div class="logo"><h1>HOGWARTS</h1></div>
+        <div class="logo"><h1>HOGWARTS SCHOOL</h1></div>
       </div>
 
       <!-- Nav -->
@@ -52,7 +52,6 @@
                 <option data-action="filter" data-filter="all">Filter All</option>
                 <option data-action="filter" data-filter="prefect">Filter by resposibility</option>
                 <option data-action="filter" data-filter="expelled">Filter by expelled</option>
-                <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
                 <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
                 <option data-action="filter" data-filter="Hufflepuff">Filter by Hufflepuff house</option>
                 <option data-action="filter" data-filter="Ravenclaw">Filter by Ravenclaw house</option>
@@ -94,7 +93,6 @@
                 <option data-action="filter" data-filter="all">Filter All</option>
                 <option data-action="filter" data-filter="prefect">Filter by resposibility</option>
                 <option data-action="filter" data-filter="expelled">Filter by expelled</option>
-                <option data-action="filter" data-filter="enrolled">Filter by enrolled</option>
                 <option data-action="filter" data-filter="Slytherin">Filter by Slytherin house</option>
                 <option data-action="filter" data-filter="Hufflepuff">Filter by Hufflepuff house</option>
                 <option data-action="filter" data-filter="Ravenclaw">Filter by Ravenclaw house</option>
@@ -130,11 +128,34 @@
         <div class="modal-reached-amount">
           <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
           <div class="modal-container">
-            <img src="assets/icons/bi_shield-shaded.svg" alt="" />
+            <img src="assets/icons/bi_shield-fill-check.svg" alt="" />
             <h2>
               You have reached the amount allowed of prefects at Hogwarts School.<br /><br />
               Four (4) 4 is the maximum allowed, Remove some of them to select a new one.
             </h2>
+          </div>
+        </div>
+      </div>
+
+      <div id="squad-modal" class="hiden">
+        <div class="modal-warning">
+          <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
+          <div class="modal-container">
+            <img src="assets/icons/bi_droplet-fill.svg" alt="" />
+            <div class="slytherin"></div>
+            <h2>You can only add students with pure-blood or students from Slytherin House.</h2>
+          </div>
+        </div>
+      </div>
+
+      <div id="warning" class="hiden">
+        <div class="modal-squad">
+          <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
+          <div class="modal-container">
+            <div class="pics-modal-container">
+              <img src="assets/icons/bi_x-circle-fill.svg" alt="" />
+            </div>
+            <h2>You can not delete this student.</h2>
           </div>
         </div>
       </div>
@@ -146,8 +167,6 @@
           <ul class="sorts">
             <li class="sort-house"><a href="#">Sort by first name</a></li>
             <li class="sort-responsibility"><a href="#">Sort by last name</a></li>
-            <li class="sort-expelled"><a href="#">Sort by enrolled</a></li>
-            <li class="sort-non-expelled"><a href="#">Sort by non-enrolled</a></li>
             <li class="sort-list"><a href="#">All</a></li>
           </ul>
         </div>
@@ -178,10 +197,10 @@
 
         <div id="parent-mobile">
           <!-- <div class="pic-container">
-            <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
+            <div class="photo"><img src="images/image.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
-              <div class="prefect-icon"><img src="assets/icons/bi_shield-shaded.svg" /></div>
+              <div class="prefect-icon"><img src="assets/icons/bi_shield-fill-check.svg" /></div>
             </div>
           </div>
           <div class="name-container">
@@ -231,7 +250,7 @@
             <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div>
             <div class="student-info">
               <div class="photo-container">
-                <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
+                <div class="photo"><img src="images/image.png" alt="" /></div>
               </div>
               <div class="fullname">
                 <div class="firstname">Hermione</div>
@@ -285,7 +304,7 @@
 
       <template id="table-template">
         <tr>
-          <td data-field="photo" class="photo"><img src="images/abbott_h.png" alt="" /></td>
+          <td data-field="photo" class="photo"><img src="images/image.png" alt="" /></td>
           <!--Cell normal-->
           <td data-field="firstname">...</td>
           <td data-field="middlename">...</td>
@@ -322,10 +341,10 @@
         <div class="container-template">
           <!-- <div class="close"><img src="assets/icons/bi_x-circle.svg" alt="" /></div> -->
           <div class="pic-container">
-            <div class="photo"><img src="images/abbott_h.png" alt="" /></div>
+            <div class="photo"><img src="images/image.png" alt="" /></div>
             <div class="icons-container">
               <div class="i-icon"><img src="assets/icons/mdi_alpha-i-circle.svg" /></div>
-              <div class="prefect-icon"><img src="assets/icons/bi_shield-shaded.svg" /></div>
+              <div class="prefect-icon"><img src="assets/icons/bi_shield-fill-check.svg" /></div>
             </div>
           </div>
           <div class="name-nick-house-color-wrap">
@@ -346,6 +365,10 @@
           <button class="icons" type="submit"><img src="assets/icons/bi_person-dash.svg" /></button>
         </div>
       </template>
+
+      <div class="center m">
+        <input type="text" id="hack" />
+      </div>
     </main>
 
     <footer></footer>

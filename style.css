@@ -354,7 +354,9 @@ header {
 #filter-modal,
 #sort-modal,
 #student-modal,
-#reachedAmount {
+#reachedAmount,
+#squad-modal,
+#warning {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -370,7 +372,9 @@ header {
 .modal-filter,
 .modal-sort,
 .modal-student,
-.modal-reached-amount {
+.modal-reached-amount,
+.modal-squad,
+.modal-warning {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -399,7 +403,8 @@ header {
   margin: var(--m-large);
 }
 
-.modal-container img {
+.modal-container img,
+.slytherin {
   width: 4rem;
   margin: var(--mtb-large);
 }
@@ -653,6 +658,23 @@ thead,
   box-shadow: var(--shadow);
 }
 
+.pics-modal-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.slytherin {
+  width: 4rem;
+  height: 4rem;
+  background-color: #f1c40f;
+  border-radius: var(--border-radius-100);
+}
+
+#hack {
+  border: 1px solid var(--gray);
+  margin: var(--mtb-large);
+}
+
 /* Medium devices (landscape tablets, 768px and up) */
 
 @media only screen and (min-width: 768px) {
@@ -887,7 +909,8 @@ thead,
   .modal-filter,
   .modal-sort,
   .modal-student,
-  .modal-reached-amount {
+  .modal-reached-amount,
+  .modal-squad {
     width: 30%;
     padding: var(--p);
   }

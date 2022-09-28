@@ -26,6 +26,22 @@ const Student = {
   gender: "",
 };
 
+//Prototype Jose
+const Jose = {
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  nickName: "",
+  house: "",
+  colorHouse: "",
+  image: "",
+  bloodStatus: "",
+  prefect: false,
+  squad: false,
+  expelled: false,
+  gender: "",
+};
+
 //Array expelled Students
 let arrExpelled = [];
 
@@ -47,9 +63,9 @@ let arrHalf = [];
 let arrPrefects = [];
 // let prefect;
 //Variables used by the Student Modal
-const shield = document.querySelector(".responsibility-container .shield");
-const remove = document.querySelector(".responsibility-container .remove");
-const iconShield = "assets/icons/bi_shield-shaded.svg";
+// const shield = document.querySelector(".responsibility-container .shield");
+// const remove = document.querySelector(".responsibility-container .remove");
+const iconShield = "assets/icons/bi_shield-fill-check.svg";
 const iconSquad = "assets/icons/mdi_alpha-i-circle.svg";
 
 // function start() {
@@ -60,15 +76,16 @@ const iconSquad = "assets/icons/mdi_alpha-i-circle.svg";
 //     });
 // }
 
+// Start
 function start() {
   console.log("ready");
-  //Add event listeners to filter and sort buttons
+  // Add event listeners to filter and sort buttons
   buttonsFilterSort();
   search();
   loadJSON();
 }
 
-//forsEach filter button / Called back from start
+// forsEach filter button / Called back from start
 function buttonsFilterSort() {
   document.querySelectorAll("[data-action='filter']").forEach((buttonFilter) => buttonFilter.addEventListener("click", selectfilter));
   document.querySelectorAll("[data-action='sort']").forEach((buttonSort) => buttonSort.addEventListener("click", selectSort));
@@ -225,7 +242,7 @@ function prepareObject(jsonObject) {
 
 //CONTROLER ///////////////////////////
 
-//* Search
+// Search
 function search() {
   const searchBar = document.getElementById("search-field");
   searchBar.addEventListener("keyup", (event) => {
@@ -238,15 +255,13 @@ function search() {
   });
 }
 
-// Filter by Houses / Called back from buttonsFilterSort
+// Filter Selected
 function selectfilter(event) {
   const filter = event.target.dataset.filter; //data-action
   console.log(`user selected: ${filter}`);
-  // filterHouses(filter);
-  // filterResponsibility(filter);
   filterStudents(filter);
 }
-// Sort by Names / Called back from buttonsFilterSort
+// Sort by Names / function Called back from buttonsFilterSort
 function selectSort(event) {
   const sort = event.target.dataset.sort; //data-action
   const sortDir = event.target.dataset.sortDirection;
@@ -268,26 +283,33 @@ function filterStudents(param) {
   if (param === "Slytherin") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isS);
+    // displayList(filteredStudents);
   } else if (param === "Hufflepuff") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isH);
+    // displayList(filteredStudents);
   } else if (param === "Ravenclaw") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isR);
+    // displayList(filteredStudents);
   } else if (param === "Gryffindor") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isG);
   } else if (param === true) {
-    //Create a list with Prefects
     filteredStudents = arrStudents.filter(isPrefect);
+  } else if (param === true) {
+    filteredStudents = arrStudents.filter(isAll);
+  } else if (param === "expelled") {
+    filteredStudents = arrExpelled;
+    // filteredStudents = arrExpelled.filter(isExpelled);
   }
 
   displayList(filteredStudents);
 
   const number = filteredStudents.length;
   document.querySelector("span").textContent = number;
-  document.querySelector(".title h1").textContent = `${param} students`;
-  console.log(number);
+  document.querySelector(".title h1").textContent = `${param} students`.substring(0, 1).toUpperCase(0, 1) + `${param} students`.substring(1).toLocaleLowerCase(1);
+  console.log(arrExpelled);
 }
 
 function isS(student) {
@@ -330,12 +352,15 @@ function isPrefect(student) {
   }
 }
 
-//Filter by Expelled
-//Filter by Enrolled
+function isAll(student) {
+  if (student) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
-//Sort
-//This function down here WORKS I can also use it with filters!
-//Just remember to update the call back function in selectFilter or selectSort functions.
+// Sort
 function sortStudents(sortBy, sortDir) {
   let sortedProperties = arrStudents;
   let direction = 1;
@@ -397,6 +422,7 @@ function sortStudents(sortBy, sortDir) {
 // }
 
 // VIEW ///////////////////////////////////////////
+
 function displayList(arrStudents) {
   //Clear the list
   document.querySelector("#parent-desktop tbody").innerHTML = "";
@@ -418,7 +444,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector(".color-house").style.backgroundColor = student.colorHouse;
 
-  //Prefect Desktop
+  // Prefect Desktop
   if (student.prefect === false) {
     clone.querySelector("[data-field=prefect] .add").classList.remove("hiden");
     clone.querySelector("[data-field=prefect] .add").addEventListener("click", clickPrefect);
@@ -433,12 +459,12 @@ function displayStudent(student) {
     clone.querySelector("[data-field=prefect] img").src = iconShield;
   }
 
-  //Prefect Desktop
+  // Prefect Desktop
   function clickPrefect() {
     let arrPrefects = arrStudents;
     prefectState(arrPrefects);
   }
-  //Prefect Desktop
+  // Prefect Desktop
   function prefectState(arrPrefects) {
     if (student.prefect === true) {
       student.prefect = false;
@@ -451,7 +477,7 @@ function displayStudent(student) {
 
   // addOnlyFour();
 
-  // //Prefect Desktop Allowed Amount
+  // // Prefect Desktop Allowed Amount
   // function addOnlyFour() {
   //   const amountPrefects = arrStudents.filter((student) => student.prefect === true).length;
   //   const amountSlytherin = arrStudents.filter((student) => student.house === "Slytherin");
@@ -472,12 +498,12 @@ function displayStudent(student) {
   //   }
   // }
 
-  // //Prefect Amount
+  // // Prefect Amount
   // function loadReachAmount() {
   //   document.querySelector("#reachedAmount").classList.remove("hiden");
   // }
 
-  //Squad Desktop
+  // Squad Desktop
   if (student.squad === false) {
     clone.querySelector("[data-field=squad] .add-squad").classList.remove("hiden");
     clone.querySelector("[data-field=squad] .add-squad").addEventListener("click", clickSquad);
@@ -492,33 +518,53 @@ function displayStudent(student) {
     clone.querySelector("[data-field=squad] img").src = iconSquad;
   }
 
-  //Squad Desktop
+  // Squad Desktop
   function clickSquad() {
     let arrMembers = arrStudents;
     squadState(arrMembers);
   }
-  //Squad Desktop
+  // Squad Desktop
   function squadState(arrMembers) {
     if (student.squad === true) {
       student.squad = false;
-    } else {
-      student.squad = true;
+    } else if (student.squad === false) {
+      if (student.house === "Slytherin" || student.bloodStatus === "Pureblood") {
+        student.squad = true;
+      } else {
+        openSquadModal();
+        console.log("open Squad Modal callback");
+      }
     }
 
     displayList(arrMembers);
   }
 
-  //Expell student
+  // Squad Modal
+  function openSquadModal() {
+    document.querySelector("#squad-modal").classList.remove("hiden");
+    // document.querySelector("#squad-modal .slytherin").style.backgroundColor = "#F1C40F";
+  }
+  // CLose Squad Modal
+  document.querySelector("#squad-modal .close").addEventListener("click", closeModal);
+
+  // Expell student
   clone.querySelector(".expel button").addEventListener("click", expelStudent);
 
   function expelStudent(obj) {
     obj = student;
     if (obj.expelled === false) {
       arrStudents.splice(arrStudents.indexOf(obj), 1);
+    } else if (obj.expelled === true) {
+      this.classList.add("hiden");
     }
-    obj.expelled = true;
-    arrExpelled.push(obj);
-    //Console.log
+    if (obj.firstName != "José") {
+      obj.expelled = true;
+      arrExpelled.push(obj);
+    }
+    if (obj.firstName === "José") {
+      openWarning();
+    }
+    // Console.log
     console.log(obj);
     console.log(arrStudents);
     console.log(arrExpelled);
@@ -630,7 +676,7 @@ function displayStudent(student) {
 
     //Prefect Mobile Modal
     if (student.prefect === false) {
-      //Add Prefect Modal
+      //Add Prefect Mobie Modal
       document.querySelector(".responsibility-container .add").classList.remove("hiden");
       document.querySelector(".responsibility-container .add").addEventListener("click", clickPrefect);
       document.querySelector(".responsibility-container .remove").classList.add("hiden");
@@ -647,21 +693,21 @@ function displayStudent(student) {
 
     //Squad Modal
     if (student.squad === false) {
-      //Add Squad Modal
+      //Add Squad Mobile Modal
       document.querySelector(".squad-container .add-squad").classList.remove("hiden");
       document.querySelector(".squad-container .add-squad").addEventListener("click", clickSquad);
       document.querySelector(".squad-container .remove-squad").classList.add("hiden");
       document.querySelector(".squad-container .yes").textContent = "None";
       document.querySelector(".squad-container .i img").src = "";
     } else {
-      //Remove Squad Modal
+      //Remove Squad Mobile Modal
       document.querySelector(".squad-container .add-squad").classList.add("hiden");
       document.querySelector(".squad-container .remove-squad").classList.remove("hiden");
       document.querySelector(".squad-container .remove-squad").addEventListener("click", clickSquad);
       document.querySelector(".squad-container .yes").textContent = "Member";
       document.querySelector(".squad-container .i img").src = iconSquad;
     }
-    //Close Student Modal
+    //Close Student Mobile Modal
     document.querySelector(".modal-student .close").addEventListener("click", closeModal);
   });
 
@@ -677,17 +723,62 @@ function openModal() {
 function closeModal() {
   document.querySelector("#student-modal").classList.add("hiden");
   document.querySelector("#reachedAmount").classList.add("hiden");
+  document.querySelector("#squad-modal").classList.add("hiden");
+  document.querySelector("#warning").classList.add("hiden");
 }
 
-//console.log(fullname);
-// console.log(spaces);
-// console.log(student.firstName);
-// console.log(student.middleName);
-// console.log(student.lastName);
-// console.log(student.nickName);
-// console.log(student.gender);
-// console.log(student.house);
-// console.log(arrStudents);
-// console.log(student.image);
+//Hack The System
+pressKey();
+function pressKey() {
+  //Input
+  let hack = document.getElementById("hack");
+  // Add event listener on keydown
+  hack.addEventListener("keypress", (event) => {
+    let jose = event.target.value.substring(0);
+    if (jose === "jose") {
+      console.log("😎");
+      // console.log(`key=${event.key},code=${event.code}`);
+      hackTheSystem();
+    } else {
+      console.log("Try Again!");
+    }
+  });
+}
+
+function hackTheSystem() {
+  console.log("Now the system is being hacked!");
+
+  //Create Jose
+  const jose = Object.create(Jose); //Create the student object.
+  //My info
+  jose.firstName = "José";
+  jose.middleName = "Francisco";
+  jose.lastName = "Sesé";
+  jose.nickName = "Spiderman";
+  jose.house = "Hufflepuff";
+  jose.colorHouse = "";
+  jose.image = "/images/jose.png";
+  jose.bloodStatus = "Pureblood";
+  jose.prefect = false;
+  jose.squad = false;
+  jose.expelled = "";
+  jose.gender = "boy";
+
+  let colorHouse;
+  if (jose.house === "Hufflepuff") {
+    colorHouse = "#28B463";
+  }
+
+  jose.colorHouse = colorHouse;
+
+  //inject me in the list
+  arrStudents.push(jose);
+  displayList(arrStudents);
+}
+
+function openWarning() {
+  document.querySelector("#warning").classList.remove("hiden");
+  document.querySelector("#warning .close").addEventListener("click", closeModal);
+}
 
 ///////////////////////
