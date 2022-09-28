@@ -42,10 +42,10 @@ const Jose = {
   gender: "",
 };
 
-//Array expelled Students
+// Array expelled Students
 let arrExpelled = [];
 
-//Protorype for the pures blood family
+// Protorype for the pures blood family
 const PureObj = {
   lastName: "",
   bloodStatus: "",
@@ -55,16 +55,14 @@ const HalfObj = {
   lastName: "",
   bloodStatus: "",
 };
-//Creating the Arrays to be filled with all the Objects (Blood Status).
+// Creating the Arrays to be filled with all the Objects (Blood Status).
 let arrPure = [];
 let arrHalf = [];
 
-//New array with prefects
+// New array with prefects
 let arrPrefects = [];
-// let prefect;
-//Variables used by the Student Modal
-// const shield = document.querySelector(".responsibility-container .shield");
-// const remove = document.querySelector(".responsibility-container .remove");
+
+// Icons
 const iconShield = "assets/icons/bi_shield-fill-check.svg";
 const iconSquad = "assets/icons/mdi_alpha-i-circle.svg";
 
