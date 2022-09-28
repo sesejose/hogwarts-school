@@ -189,49 +189,6 @@ function prepareObject(jsonObject) {
     }
   }
 
-  // function prepareDataBlood(jsonDataBlood) {
-  //   const arrLastNamesPure = Object.values(jsonDataBlood.pure);
-  //   // console.log(arrLastNamesPure);
-  //   const arrLastNamesHalf = Object.values(jsonDataBlood.half);
-  //   // console.log(arrLastNamesHalf);
-  //   arrPure = arrLastNamesPure.map(preparePureObj);
-  //   arrHalf = arrLastNamesHalf.map(prepareHalfObj);
-  // }
-
-  // //Defining the Pure object
-  // function preparePureObj(lastnames) {
-  //   const pureObj = Object.create(PureObj); //Create the Pure object.
-  //   // console.log(lastnames);
-  //   pureObj.lastName = lastnames;
-  //   pureObj.bloodStatus = "Pure";
-  //   // console.log(pureObj);
-  //   return pureObj;
-  // }
-
-  // //Defining the Half object
-  // function prepareHalfObj(lastnames) {
-  //   const halfObj = Object.create(HalfObj); //Create the Pure object.
-  //   // console.log(arrPureObj);
-  //   halfObj.lastName = lastnames;
-  //   halfObj.bloodStatus = "Half";
-  //   // console.log(halfObj);
-  //   return halfObj;
-  // }
-
-  // compareObjects();
-  // function compareObjects() {
-  //   const pureObj = preparePureObj;
-  //   const halfObj = prepareHalfObj;
-  //   console.log(pureObj, HalfObj);
-  //  if(....) but still not working ..
-  // }
-
-  // function displayListBloodStatus(arrPure, arrHalf) {
-  //   console.table("Display List Of Pure and Half Arrays Works!");
-  // }
-
-  //////////////////////////////////////////////////////////
-
   //Creating Array of objects
   arrStudents.push(student);
 
