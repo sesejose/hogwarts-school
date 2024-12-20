@@ -20,7 +20,7 @@ const Student = {
   colorHouse: "",
   image: "",
   bloodStatus: "",
-  prefect: false,
+  prefect: "",
   squad: false,
   expelled: false,
   gender: "",
@@ -36,7 +36,7 @@ const Jose = {
   colorHouse: "",
   image: "",
   bloodStatus: "",
-  prefect: false,
+  prefect: "",
   squad: false,
   expelled: false,
   gender: "",
@@ -45,7 +45,7 @@ const Jose = {
 // Array expelled Students
 let arrExpelled = [];
 
-// Protorype for the pures blood family
+// Prototype for the pure blood family
 const PureObj = {
   lastName: "",
   bloodStatus: "",
@@ -97,6 +97,11 @@ async function loadJSON() {
   console.log(jsonData); //This is an orray of objects
 }
 
+// After getting jsonData as response (Array of objects / students) I map()
+// map(function) --> has a function as a parameter and that function do something
+// that function uses a parameter to refer to every single object in the array that is having to map
+// and say for that every object do something: create and object and define the properties and values
+
 function prepareData(jsonData) {
   arrStudents = jsonData.map(prepareObject);
 
@@ -144,9 +149,25 @@ function prepareObject(jsonObject) {
   student.gender = gender;
   //Defining house
   student.house = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase();
-  //Charging image
-  let imagePath = student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase().substring(0, 1) + ".png";
+  // Defining imagePath
+  let imagePath;
+  if (student.firstName.length > 1) {
+    imagePath = student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase().substring(0, 1) + ".png";
+  }
+  if (student.lastName === "Patil") {
+    imagePath = student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
+  }
+  if (student.firstName === "Justin") {
+    imagePath = "fletchley" + "_" + student.firstName.toLowerCase().substring(0, 1) + ".png";
+  }
+  // Defining Student Image
   student.image = "images/" + `${imagePath}`;
+  // If lastName is empty or image is known to be missing, set a fallback
+  if (!student.lastName) {
+    student.image = "images/jose.png";
+    console.log(student.firstName);
+  }
+
   //Defining color house
   let colorHouse;
   if (student.house === "Slytherin") {
@@ -238,20 +259,19 @@ function filterStudents(param) {
   if (param === "Slytherin") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isS);
-    // displayList(filteredStudents);
   } else if (param === "Hufflepuff") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isH);
-    // displayList(filteredStudents);
   } else if (param === "Ravenclaw") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isR);
-    // displayList(filteredStudents);
   } else if (param === "Gryffindor") {
     //Create a list with Slytherin houses
     filteredStudents = arrStudents.filter(isG);
-  } else if (param === true) {
+  } else if (param === "prefect") {
+    // filteredStudents = arrPrefects
     filteredStudents = arrStudents.filter(isPrefect);
+    // filterStudents = arrPrefects;
   } else if (param === true) {
     filteredStudents = arrStudents.filter(isAll);
   } else if (param === "expelled") {
@@ -264,7 +284,7 @@ function filterStudents(param) {
   const number = filteredStudents.length;
   document.querySelector("span").textContent = number;
   document.querySelector(".title h1").textContent = `${param} students`.substring(0, 1).toUpperCase(0, 1) + `${param} students`.substring(1).toLocaleLowerCase(1);
-  console.log(arrExpelled);
+  // console.log(arrExpelled);
 }
 
 function isS(student) {
@@ -301,11 +321,26 @@ function isG(student) {
 
 function isPrefect(student) {
   if (student.prefect === true) {
+    console.log(student);
+    // Add student to arrPrefects Global Variable
+    if (student.firstName != "José") {
+      arrPrefects.push(student);
+    }
     return true;
   } else {
     return false;
   }
 }
+
+// function addPrefectToArray(student) {
+// console.log("addPrefectToArray function works!");
+// Prefect student
+// if (student.firstName != "José") {
+//   arrPrefects.push(student);
+// console.log("arrPrefects:", arrPrefects);
+// }
+// displayList(arrPrefects);
+// }
 
 function isAll(student) {
   if (student) {
@@ -401,14 +436,14 @@ function displayStudent(student) {
 
   // Prefect Desktop
   if (student.prefect === false) {
-    clone.querySelector("[data-field=prefect] .add").classList.remove("hiden");
+    clone.querySelector("[data-field=prefect] .add").classList.remove("hidden");
     clone.querySelector("[data-field=prefect] .add").addEventListener("click", clickPrefect);
-    clone.querySelector("[data-field=prefect] .remove").classList.add("hiden");
+    clone.querySelector("[data-field=prefect] .remove").classList.add("hidden");
     clone.querySelector("[data-field=prefect] .pr").textContent = "None";
     clone.querySelector("[data-field=prefect] img").src = "";
   } else if (student.prefect === true) {
-    clone.querySelector("[data-field=prefect] .add").classList.add("hiden");
-    clone.querySelector("[data-field=prefect] .remove").classList.remove("hiden");
+    clone.querySelector("[data-field=prefect] .add").classList.add("hidden");
+    clone.querySelector("[data-field=prefect] .remove").classList.remove("hidden");
     clone.querySelector("[data-field=prefect] .remove").addEventListener("click", clickPrefect);
     clone.querySelector("[data-field=prefect] .pr").textContent = "Prefect";
     clone.querySelector("[data-field=prefect] img").src = iconShield;
@@ -421,11 +456,18 @@ function displayStudent(student) {
   }
   // Prefect Desktop
   function prefectState(arrPrefects) {
+    console.log(student);
+    console.log(arrPrefects);
     if (student.prefect === true) {
       student.prefect = false;
     } else {
       student.prefect = true;
     }
+    // Prefect student
+    // if (student.firstName != "José") {
+    //   arrPrefects.push(student);
+    //   console.log("arrPrefects:", arrPrefects);
+    // }
 
     displayList(arrPrefects);
   }
@@ -455,19 +497,19 @@ function displayStudent(student) {
 
   // // Prefect Amount
   // function loadReachAmount() {
-  //   document.querySelector("#reachedAmount").classList.remove("hiden");
+  //   document.querySelector("#reachedAmount").classList.remove("hidden");
   // }
 
   // Squad Desktop
   if (student.squad === false) {
-    clone.querySelector("[data-field=squad] .add-squad").classList.remove("hiden");
+    clone.querySelector("[data-field=squad] .add-squad").classList.remove("hidden");
     clone.querySelector("[data-field=squad] .add-squad").addEventListener("click", clickSquad);
-    clone.querySelector("[data-field=squad] .remove-squad").classList.add("hiden");
+    clone.querySelector("[data-field=squad] .remove-squad").classList.add("hidden");
     clone.querySelector("[data-field=squad] .sq").textContent = "None";
     clone.querySelector("[data-field=squad] img").src = "";
   } else if (student.squad === true) {
-    clone.querySelector("[data-field=squad] .add-squad").classList.add("hiden");
-    clone.querySelector("[data-field=squad] .remove-squad").classList.remove("hiden");
+    clone.querySelector("[data-field=squad] .add-squad").classList.add("hidden");
+    clone.querySelector("[data-field=squad] .remove-squad").classList.remove("hidden");
     clone.querySelector("[data-field=squad] .remove-squad").addEventListener("click", clickSquad);
     clone.querySelector("[data-field=squad] .sq").textContent = "Member";
     clone.querySelector("[data-field=squad] img").src = iconSquad;
@@ -496,7 +538,7 @@ function displayStudent(student) {
 
   // Squad Modal
   function openSquadModal() {
-    document.querySelector("#squad-modal").classList.remove("hiden");
+    document.querySelector("#squad-modal").classList.remove("hidden");
     // document.querySelector("#squad-modal .slytherin").style.backgroundColor = "#F1C40F";
   }
   // CLose Squad Modal
@@ -510,7 +552,7 @@ function displayStudent(student) {
     if (obj.expelled === false) {
       arrStudents.splice(arrStudents.indexOf(obj), 1);
     } else if (obj.expelled === true) {
-      this.classList.add("hiden");
+      this.classList.add("hidden");
     }
     if (obj.firstName != "José") {
       obj.expelled = true;
@@ -520,9 +562,9 @@ function displayStudent(student) {
       openWarning();
     }
     // Console.log
-    console.log(obj);
-    console.log(arrStudents);
-    console.log(arrExpelled);
+    console.log("obj/studen:", obj);
+    console.log("arrStudents", arrStudents);
+    console.log("arrExpelled:", arrExpelled);
     // const removeObj = arrStudents.filter("student")
     displayList(arrStudents);
   }
@@ -546,15 +588,15 @@ function displayStudent(student) {
     //Prefect Modal
     if (student.prefect === false) {
       //Add Prefect Modal
-      document.querySelector(".responsibility-container .add").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").classList.remove("hidden");
       document.querySelector(".responsibility-container .add").addEventListener("click", clickPrefect);
-      document.querySelector(".responsibility-container .remove").classList.add("hiden");
+      document.querySelector(".responsibility-container .remove").classList.add("hidden");
       document.querySelector(".responsibility-container .prefect").textContent = "None";
       document.querySelector(".responsibility-container .shield img").src = "";
     } else {
       //Remove Prefect Modal
-      document.querySelector(".responsibility-container .add").classList.add("hiden");
-      document.querySelector(".responsibility-container .remove").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").classList.add("hidden");
+      document.querySelector(".responsibility-container .remove").classList.remove("hidden");
       document.querySelector(".responsibility-container .remove").addEventListener("click", clickPrefect);
       document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
       document.querySelector(".responsibility-container .shield img").src = iconShield;
@@ -563,15 +605,15 @@ function displayStudent(student) {
     //Squad Modal
     if (student.squad === false) {
       //Add Squad Modal
-      document.querySelector(".squad-container .add-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").classList.remove("hidden");
       document.querySelector(".squad-container .add-squad").addEventListener("click", clickSquad);
-      document.querySelector(".squad-container .remove-squad").classList.add("hiden");
+      document.querySelector(".squad-container .remove-squad").classList.add("hidden");
       document.querySelector(".squad-container .yes").textContent = "None";
       document.querySelector(".squad-container .i img").src = "";
     } else {
       //Remove Squad Modal
-      document.querySelector(".squad-container .add-squad").classList.add("hiden");
-      document.querySelector(".squad-container .remove-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").classList.add("hidden");
+      document.querySelector(".squad-container .remove-squad").classList.remove("hidden");
       document.querySelector(".squad-container .remove-squad").addEventListener("click", clickSquad);
       document.querySelector(".squad-container .yes").textContent = "Member";
       document.querySelector(".squad-container .i img").src = iconSquad;
@@ -595,23 +637,23 @@ function displayStudent(student) {
   cloneMobile.querySelector(".name-container .nickname").textContent = student.nickName;
   cloneMobile.querySelector(".house-container .housename").textContent = student.house;
   cloneMobile.querySelector(".house-container .color-house").style.backgroundColor = student.colorHouse;
-  cloneMobile.querySelector(".prefect-icon").classList.add("hiden");
-  cloneMobile.querySelector(".i-icon").classList.add("hiden");
+  cloneMobile.querySelector(".prefect-icon").classList.add("hidden");
+  cloneMobile.querySelector(".i-icon").classList.add("hidden");
 
   // //Prefect Mobile
   if (student.prefect === true) {
     // //In mobile
-    cloneMobile.querySelector(".prefect-icon").classList.remove("hiden");
+    cloneMobile.querySelector(".prefect-icon").classList.remove("hidden");
   } else {
-    cloneMobile.querySelector(".prefect-icon").classList.add("hiden");
+    cloneMobile.querySelector(".prefect-icon").classList.add("hidden");
   }
 
   // //Squad Mobile
   if (student.squad === true) {
     // //In mobile
-    cloneMobile.querySelector(".i-icon").classList.remove("hiden");
+    cloneMobile.querySelector(".i-icon").classList.remove("hidden");
   } else {
-    cloneMobile.querySelector(".i-icon").classList.add("hiden");
+    cloneMobile.querySelector(".i-icon").classList.add("hidden");
   }
 
   //Expel from Mobile
@@ -632,15 +674,15 @@ function displayStudent(student) {
     //Prefect Mobile Modal
     if (student.prefect === false) {
       //Add Prefect Mobie Modal
-      document.querySelector(".responsibility-container .add").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").classList.remove("hidden");
       document.querySelector(".responsibility-container .add").addEventListener("click", clickPrefect);
-      document.querySelector(".responsibility-container .remove").classList.add("hiden");
+      document.querySelector(".responsibility-container .remove").classList.add("hidden");
       document.querySelector(".responsibility-container .prefect").textContent = "None";
       document.querySelector(".responsibility-container .shield img").src = "";
     } else {
       //Remove Prefect Mobile Modal
-      document.querySelector(".responsibility-container .add").classList.add("hiden");
-      document.querySelector(".responsibility-container .remove").classList.remove("hiden");
+      document.querySelector(".responsibility-container .add").classList.add("hidden");
+      document.querySelector(".responsibility-container .remove").classList.remove("hidden");
       document.querySelector(".responsibility-container .remove").addEventListener("click", clickPrefect);
       document.querySelector(".responsibility-container .prefect").textContent = "Prefect";
       document.querySelector(".responsibility-container .shield img").src = iconShield;
@@ -649,15 +691,15 @@ function displayStudent(student) {
     //Squad Modal
     if (student.squad === false) {
       //Add Squad Mobile Modal
-      document.querySelector(".squad-container .add-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").classList.remove("hidden");
       document.querySelector(".squad-container .add-squad").addEventListener("click", clickSquad);
-      document.querySelector(".squad-container .remove-squad").classList.add("hiden");
+      document.querySelector(".squad-container .remove-squad").classList.add("hidden");
       document.querySelector(".squad-container .yes").textContent = "None";
       document.querySelector(".squad-container .i img").src = "";
     } else {
       //Remove Squad Mobile Modal
-      document.querySelector(".squad-container .add-squad").classList.add("hiden");
-      document.querySelector(".squad-container .remove-squad").classList.remove("hiden");
+      document.querySelector(".squad-container .add-squad").classList.add("hidden");
+      document.querySelector(".squad-container .remove-squad").classList.remove("hidden");
       document.querySelector(".squad-container .remove-squad").addEventListener("click", clickSquad);
       document.querySelector(".squad-container .yes").textContent = "Member";
       document.querySelector(".squad-container .i img").src = iconSquad;
@@ -672,14 +714,14 @@ function displayStudent(student) {
 
 //Open Student Modal
 function openModal() {
-  document.querySelector("#student-modal").classList.remove("hiden");
+  document.querySelector("#student-modal").classList.remove("hidden");
 }
 //Close Student Modal
 function closeModal() {
-  document.querySelector("#student-modal").classList.add("hiden");
-  document.querySelector("#reachedAmount").classList.add("hiden");
-  document.querySelector("#squad-modal").classList.add("hiden");
-  document.querySelector("#warning").classList.add("hiden");
+  document.querySelector("#student-modal").classList.add("hidden");
+  document.querySelector("#reachedAmount").classList.add("hidden");
+  document.querySelector("#squad-modal").classList.add("hidden");
+  document.querySelector("#warning").classList.add("hidden");
 }
 
 //Hack The System
@@ -732,7 +774,7 @@ function hackTheSystem() {
 }
 
 function openWarning() {
-  document.querySelector("#warning").classList.remove("hiden");
+  document.querySelector("#warning").classList.remove("hidden");
   document.querySelector("#warning .close").addEventListener("click", closeModal);
 }
 
