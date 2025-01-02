@@ -762,6 +762,10 @@ thead,
     gap: 1rem;
     justify-content: start;
   }
+
+  #parent-mobile {
+    margin-top: 120px;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -807,6 +811,11 @@ thead,
   .title {
     grid-column: 1/2;
     grid-row: 1/-1;
+    flex-direction: column;
+  }
+
+  .title h1 {
+    margin: 0;
   }
 
   #search {
